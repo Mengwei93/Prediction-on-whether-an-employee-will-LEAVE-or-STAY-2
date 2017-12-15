@@ -1,0 +1,198 @@
+
+<html>
+<head>
+
+    <script>
+        var satis_array = {{ satis_data|safe }};
+        satis_data = [];
+
+        for (i of satis_array) {
+            single = JSON.parse(i);
+            satis_data.push(single);
+        }
+
+        var proj_array = {{ proj_data|safe }};
+        proj_data = [];
+
+        for (i of proj_array) {
+            single = JSON.parse(i);
+            proj_data.push(single);
+        }
+
+        var evalu_array = {{ evalu_data|safe }};
+        evalu_data = [];
+
+        for (i of evalu_array) {
+            single = JSON.parse(i);
+            evalu_data.push(single);
+        }
+
+        var hour_array = {{ hour_data|safe }};
+        hour_data = [];
+
+        for (i of hour_array) {
+            single = JSON.parse(i);
+            hour_data.push(single);
+        }
+
+        var time_array = {{ time_data|safe }};
+        time_data = [];
+
+        for (i of time_array) {
+            single = JSON.parse(i);
+            time_data.push(single);
+        }
+
+    </script>
+
+	<script type="text/javascript">
+		window.onload = function () {
+			var sat_chart = new CanvasJS.Chart("sat_chart", {
+				title: {
+					text: "Satisfaction Level"
+				},
+                legend: { fontFamily: "calibri",
+                           fontSize:14,
+        },
+				data: [{
+					type: "doughnut",
+					dataPoints: satis_data
+				}]
+			});
+			sat_chart.render();
+
+			var proj_chart = new CanvasJS.Chart("proj_chart", {
+				title: {
+					text: "Number of Projects"
+				},
+				data: [{
+					type: "column",
+					dataPoints: proj_data
+				}]
+			});
+			proj_chart.render();
+
+			var evalu_chart = new CanvasJS.Chart("evalu_chart", {
+				title: {
+					text: "Last Evaluation"
+				},
+				data: [{
+					type: "doughnut",
+					dataPoints: evalu_data
+				}]
+			});
+			evalu_chart.render();
+
+			var hour_chart = new CanvasJS.Chart("hour_chart", {
+				title: {
+					text: "Average monthly Hours "
+				},
+				data: [{
+					type: "scatter",
+					dataPoints: hour_data
+				}]
+			});
+			hour_chart.render();
+
+			var time_chart = new CanvasJS.Chart("time_chart", {
+				title: {
+					text: "Time At Company (years)"
+				},
+				data: [{
+					type: "column",
+					dataPoints: time_data
+				}]
+			});
+			time_chart.render();
+		};
+
+	</script>
+	<script src="./static/canvasjs.min.js"></script>
+	<title>Employee Evaluation</title>
+    <style>
+
+body { background-color: white; }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even){background-color: #909090}
+</style>
+
+</head>
+ <style type="text/css">
+         .scroll{
+            display:block;
+            border: 1px solid #000500;
+            padding:5px;
+            margin-top:5px;
+            width:100%;
+            height:100px;
+            overflow:scroll;
+         }
+         .auto{
+            display:block;
+            border: 1px solid #000500;
+            padding:5px;
+            margin-top:5px;
+            width:60%;
+            height:50%;
+            overflow:auto;
+         }
+      </style>
+
+<body>
+
+    <h1 align="center">EMPLOYEE EVALUATION</h1>
+    <h1 align="center">{{ page_title }}</h1>
+
+    <form action="/dashboard" method="POST">
+	    <select name="selection" onchange="this.form.submit()">
+		    {% for dept in dept_list %}
+			    <option value="{{ dept }}">{{ dept }}</option>
+            {% endfor %}
+	    </select>
+    </form>
+<div class="selection" style="margin-top: 50px; margin-left: auto; margin-right: auto; width: 1010px;">
+	<div id="sat_chart" style="height: 300px; width: 60%;margin: 20 auto;"></div>
+    <div id="proj_chart" style="height: 300px; width: 60%;margin: 20 auto;"></div>
+    <div id="evalu_chart" style="height: 300px; width: 60%;margin: 20 auto;"></div>
+    <div id="hour_chart" style="height: 300px; width: 60%;margin: 20 auto;"></div>
+    <div id="time_chart" style="height: 300px; width: 60%;margin: 20 auto;"></div>
+    <br><br><br>
+
+    <h2>Employee Detail</h2>
+    <div class="auto">
+
+    <table>
+        <thead>
+        <tr>
+            <th>Details</th>
+        </tr>
+        </thead>
+
+            <tr>
+                <td colspan="2">
+
+                {% for employee in leaving_list %}
+                <tr>
+                <td>{{ employee }}</td>
+                {% endfor %}</tr>
+            </td>
+            </tr>
+    </table>
+    </div>
+    <br><br><br>
+
+</script>
+</body>
+
+</html>
